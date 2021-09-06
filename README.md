@@ -1,6 +1,7 @@
 # covid19-vaccine-waste
 
-Credit to [a data scientist](https://anonymousdata.medium.com/) for filing a FOIA request with CDC for the dataset on vaccine waste. Links to data and original medium post below. Additionally, I'd skimmign the recommended readings. The post from someweekendreading's blog is particularly insightful. 
+Credit to [a data scientist](https://anonymousdata.medium.com/) for filing a FOIA request with CDC for the dataset on vaccine waste. Links to data and original medium post below. Additionally, I'd skimmign the recommended readings. The [post](https://www.someweekendreading.blog/vaccine-waste/
+) from someweekendreading's blog is particularly insightful. 
 
 ## data source:
 * https://anonymousdata.medium.com/the-cdc-reported-11-3-million-wasted-covid-19-vaccine-doses-in-8-months-5bdff71a850a
