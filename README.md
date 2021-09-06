@@ -19,3 +19,13 @@ R scripts to process the data in `R/`. Run `load.R` first then run `analysis.R`.
 * https://www.who.int/immunization/programmes_systems/supply_chain/resources/Revising_Wastage_Concept_Note.pdf?ua=1
 * https://www.fiercepharma.com/pharma/pfizer-eyes-higher-covid-19-vaccine-prices-after-pandemic-exec-analyst
 * https://www.propublica.org/article/covid-vaccine-wastage
+
+## ggplot2 graphics:
+![plot](graphics/ggp_wastebyweek.png)
+![plot](graphics/ggp_spaghetti_plot.png)
+![plot](graphics/ggp_wastebyweekandmanufac.png)
+![plot](graphics/ggp_wastebyawardee.png)
+![plot](graphics/ggp_costbyawardee.png)
+![plot](graphics/ggp_wastebymanufact.png)
+![plot](graphics/ggp_costbymanufact.png)
+![plot](graphics/ggp_wastebyawardee_manufac.png)
