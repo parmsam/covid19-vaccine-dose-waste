@@ -1,6 +1,6 @@
 # covid19-vaccine-waste
 
-Credit to [a data scientist](https://anonymousdata.medium.com/) for filing a FOIA request with CDC for the dataset on vaccine waste. Links to data and original medium post below. Additionally, I'd skimmign the recommended readings. The [post](https://www.someweekendreading.blog/vaccine-waste/
+Credit to [a data scientist](https://anonymousdata.medium.com/) for filing a FOIA request with CDC for the dataset on vaccine waste. Links to data and original medium post below. Additionally, I'd skimming the recommended readings. The [post](https://www.someweekendreading.blog/vaccine-waste/
 ) from someweekendreading's blog is particularly insightful. 
 
 ## data source:
