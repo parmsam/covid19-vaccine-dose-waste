@@ -7,6 +7,19 @@ library(stringr)
 library(scales)
 library(janitor)
 
+# ensure sub-directory creation ----
+if(!dir.exists(here("input")) ){
+  dir.create(here("input"))
+}
+
+if(!dir.exists(here("output")) ){
+  dir.create(here("output"))
+}
+
+if(!dir.exists(here("graphics")) ){
+  dir.create(here("graphics"))
+}
+
 #download excel data ----
 excel_url <- "https://adatascienti.st/cdc/wastage.xlsx"
 if(!file.exists( here("input/wastage.xlsx") )){
