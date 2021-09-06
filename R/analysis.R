@@ -62,11 +62,55 @@ ggp_wastebyweek <- wastage %>%
   xlab("") + ylab("") + 
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5)) + 
   labs(title = "Total counts of doses wasted per week in USA", 
-     caption = "Outlier highlighted red") 
+     caption = "Max week highlighted red with dates representing waste submission week") 
 
 ggp_wastebyweek
 
-# define function for total waste by group ----
+ggp_wastebyweekandmanufac <- wastage %>% 
+  group_by(WASTAGE_SUBMITTED_WEEK, VAX_MANUFACTURER) %>%
+  summarize(Count_Doses_Wasted = sum(DOSES_SUBMITTED)) %>% 
+  group_by(VAX_MANUFACTURER) %>%
+  mutate(FILL1 = ifelse(Count_Doses_Wasted == max(Count_Doses_Wasted), 
+                        "darkred", 
+                        "lightblue")) %>%  
+  ungroup() %>%
+  ggplot(aes(x=WASTAGE_SUBMITTED_WEEK, y = Count_Doses_Wasted, fill = FILL1, 
+             group = VAX_MANUFACTURER)) + 
+  geom_col() +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_date(labels = date_format("%m-%d"),
+               breaks = seq(min(wastage$WASTAGE_SUBMITTED_WEEK),
+                            max(wastage$WASTAGE_SUBMITTED_WEEK),
+                            by="week")) +
+  xlab("") + ylab("") + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5)) + 
+  labs(title = "Total counts of doses wasted per week in USA", 
+       caption = "Max week highlighted red with dates representing waste submission week") +
+  facet_wrap(~VAX_MANUFACTURER, nrow = 3, scales = "free_y")
+
+ggp_wastebyweekandmanufac
+
+ggp_spaghetti_plot <- wastage %>% 
+  group_by(WASTAGE_SUBMITTED_WEEK, VAX_MANUFACTURER) %>%
+  summarize(Count_Doses_Wasted = sum(DOSES_SUBMITTED)) %>% 
+  group_by(VAX_MANUFACTURER) %>%
+  ungroup() %>%
+  ggplot(aes(x=WASTAGE_SUBMITTED_WEEK, y = Count_Doses_Wasted)) + 
+  geom_line(aes(group = VAX_MANUFACTURER, color = VAX_MANUFACTURER)) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_date(labels = date_format("%m-%d"),
+               breaks = seq(min(wastage$WASTAGE_SUBMITTED_WEEK),
+                            max(wastage$WASTAGE_SUBMITTED_WEEK),
+                            by="week")) +
+  xlab("") + ylab("") + 
+  theme(legend.position="bottom", legend.title = element_blank()) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5)) + 
+  labs(title = "Total counts of doses wasted per week in USA by Vaccine Manufacturer", 
+       caption = "Max week highlighted red with dates representing waste submission week") + 
+  geom_smooth(colour="black", size = 0.25, se = FALSE)
+ggp_spaghetti_plot
+
+# define plot functions ----
 topn_plot <- function(group_by_var1 = AWARDEE,
                       measure = DOSES_SUBMITTED, 
                       n = 20, 
@@ -87,6 +131,38 @@ topn_plot <- function(group_by_var1 = AWARDEE,
     labs(title= title_entry)
   
   return(ggp_wastebyawardee)
+}
+
+topn_facet_plot <- function(group_by_var1 = AWARDEE,
+                            facet_group1 = VAX_MANUFACTURER,
+                            measure = DOSES_SUBMITTED, 
+                            n1 = 10, 
+                            nrow1 = 3,
+                            title_entry = ""){
+  ggp_wastebyawardee2 <- wastage %>% 
+    group_by({{group_by_var1}}, {{facet_group1}}) %>%
+    summarize(Count_Doses_Wasted = sum({{measure}})) %>% 
+    arrange(-Count_Doses_Wasted) %>%
+    group_by({{facet_group1}}) %>%
+    slice_max(Count_Doses_Wasted, n = {{n1}}) %>%
+    ungroup() %>%
+    group_by({{facet_group1}}) %>%
+    mutate({{group_by_var1}} := forcats::fct_reorder2({{group_by_var1}}, 
+                                                      Count_Doses_Wasted, 
+                                                      {{facet_group1}})) %>%
+    group_by({{facet_group1}}) %>%
+    mutate(FILL1 = ifelse(Count_Doses_Wasted == max(Count_Doses_Wasted),
+                          "darkred",
+                          "lightblue")) %>%
+    ggplot(aes(x = {{group_by_var1}}, y = Count_Doses_Wasted, fill = FILL1,
+               group = {{facet_group1}}) ) +
+    geom_col() +
+    scale_y_continuous(labels = scales::comma) +
+    coord_flip() +
+    xlab("") + ylab("") +
+    labs(title= title_entry) +
+    facet_wrap(vars({{facet_group1}}), nrow = {{nrow1}}, scales="free_y")
+  return(ggp_wastebyawardee2)
 }
 
 # Total waste by awardee ---
@@ -117,6 +193,12 @@ ggp_costbymanufact <- topn_plot(group_by_var1 = VAX_MANUFACTURER,
                      limits =  c(0, 100000000))
 ggp_costbymanufact
 
+# Total waste by awardee and manufacturer---
+ggp_wastebyawardee_manufac <- topn_facet_plot(group_by_var1 = AWARDEE,
+                facet_group1 = VAX_MANUFACTURER,
+                n1 = 8, 
+                title_entry = "Counts of vaccine doses wasted by awardee and manufacturer (top 8)")
+
 # define fucntion to save ggplot objects ----
 custom_ggsave <- function(gg_object){
   fn = here("graphics", paste0( substitute(gg_object), ".png") )
@@ -124,8 +206,17 @@ custom_ggsave <- function(gg_object){
   ggplot2::ggsave(plot = {{gg_object}}, filename = fn, height =4, width = 9, scale = 0.9)
 }
 
+custom_ggsave_alt <- function(gg_object){
+  fn = here("graphics", paste0( substitute(gg_object), ".png") )
+  print(fn)
+  ggplot2::ggsave(plot = {{gg_object}}, filename = fn, height =7, width = 9, scale = 0.9)
+}
+
 # export ggplot objects to graphics folder ----
 custom_ggsave(gg_object = ggp_wastebyweek)
+custom_ggsave_alt(gg_object = ggp_wastebyweekandmanufac)
+custom_ggsave_alt(gg_object = ggp_wastebyawardee_manufac)
+custom_ggsave(gg_object = ggp_spaghetti_plot)
 
 custom_ggsave(gg_object = ggp_wastebyawardee)
 custom_ggsave(gg_object = ggp_wastebymanufact)
