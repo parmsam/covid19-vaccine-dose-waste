@@ -99,20 +99,20 @@ ggp_wastebyawardee
 
 ggp_costbyawardee <- topn_plot(group_by_var1 = AWARDEE, 
                                 measure = EST_WASTE_COST,
-                                title_entry = "Cost of vaccine doses wasted by awardee (top 20)") +
+                                title_entry = "Estimated cost of vaccine doses wasted by awardee (top 20)") +
   scale_y_continuous(labels=scales::dollar_format(), limits =  c(0, 40000000))
 ggp_costbyawardee
 
 # Total waste by manufacturer ----
 ggp_wastebymanufact <- topn_plot(group_by_var1 = VAX_MANUFACTURER, 
            measure = DOSES_SUBMITTED, 
-           title_entry = "Counts of vaccine doses wasted by manufacturer") +
+           title_entry = "Counts of vaccine doses wasted by vaccine manufacturer") +
   scale_y_continuous(labels = scales::comma, limits =  c(0, 8000000))
 ggp_wastebymanufact
 
 ggp_costbymanufact <- topn_plot(group_by_var1 = VAX_MANUFACTURER, 
                                   measure = EST_WASTE_COST, 
-                                  title_entry = "Cost of vaccine doses wasted by manufacturer") +
+                                  title_entry = "Estimated cost of vaccine doses wasted by vaccine manufacturer") +
   scale_y_continuous(labels = scales::dollar_format(), 
                      limits =  c(0, 100000000))
 ggp_costbymanufact
