@@ -17,3 +17,5 @@ R scripts to process the data in `R/`. Run `load.R` first then run `analysis.R`.
 * https://www.cdc.gov/vaccines/covid-19/downloads/wastage-operational-summary.pdf
 * https://covid.cdc.gov/covid-data-tracker/#vaccinations_vacc-total-admin-rate-total
 * https://www.who.int/immunization/programmes_systems/supply_chain/resources/Revising_Wastage_Concept_Note.pdf?ua=1
+* https://www.fiercepharma.com/pharma/pfizer-eyes-higher-covid-19-vaccine-prices-after-pandemic-exec-analyst
+* https://www.propublica.org/article/covid-vaccine-wastage
