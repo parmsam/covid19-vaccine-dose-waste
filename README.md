@@ -1,7 +1,7 @@
 # covid19-vaccine-dose-waste
 
 Credit to [a data scientist](https://anonymousdata.medium.com/) for filing a FOIA request with CDC for the dataset on vaccine waste. Links to data and original medium post below. Additionally, I would skim the recommended readings below, if interested in exploring further, since they provide additional context. The [post](https://www.someweekendreading.blog/vaccine-waste/
-) from someweekendreading's blog is particularly insightful. Relative to other vaccine campaigns (see `someweekendreading's blog post` and the `Revising_Wastage_Concept_Note.pdf`), the estimated waste proportion so far indicates that we're doing pretty well. 
+) from someweekendreading's blog is particularly insightful. Relative to other vaccine campaigns (see `someweekendreading's blog post` and the `Revising_Wastage_Concept_Note.pdf`), the estimated waste rates so far indicates that we're doing pretty well. 
 
 R scripts to process the data in `R/`. Run `load.R` first then run `analysis.R`. Ensure packages are installed prior. If you're running the latest version of RStudio then you should get a notification to install missing packages. Not including original data in the repo, but the scripts will download/import the data and export a few graphs.
 
