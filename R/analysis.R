@@ -20,7 +20,7 @@ if(!file.exists( here("output/wastage-processed.csv") )){
 theme_set(theme_minimal() + 
             theme(legend.position="none") + 
             theme(plot.margin = margin(t= 0.5, r= 0.8, b= 0.5, l=0.5, "cm")) +
-            theme(plot.caption = element_text(size= 6, hjust = 0.5)))
+            theme(plot.caption = element_text(size= 6, hjust = 0.5))
           )
 
 # look over data ----
@@ -53,8 +53,10 @@ max_wastage_submitted_date <- max(wastage$WASTAGE_SUBMITTED_DATE)
 
 caption_text = glue::glue("Max week highlighted red with dates representing waste submission week. 
                           {total_wasted_doses} total doses wasted at estimated cost of {sum_dollars_wasted} from {min_wastage_submitted_date} to {max_wastage_submitted_date}.
-                          Estimated {recent_dose_administered} total doses administered as of September 4, 2021.")
-
+                          Estimated {recent_dose_administered} total doses administered as of September 4, 2021, based on CDC COVID data tracker.")
+caption_text_alt = glue::glue("Max record group highlighted red if viewing bar chart. 
+                              {total_wasted_doses} total doses wasted at estimated cost of {sum_dollars_wasted} from {min_wastage_submitted_date} to {max_wastage_submitted_date}.
+                              Estimated {recent_dose_administered} total doses administered as of September 4, 2021, based on CDC COVID data tracker.")
 # reproduce graph ----
 ## reproduce total number of wasted doses by week with red fill on 6/6
 ggp_wastebyweek <- wastage %>% 
@@ -72,7 +74,7 @@ ggp_wastebyweek <- wastage %>%
                             by="week")) +
   xlab("") + ylab("") + 
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5)) + 
-  labs(title = "Total reported counts of doses wasted per week in USA") +
+  labs(title = "Reported counts of doses wasted per week in USA") +
   labs(caption = caption_text)
 ggp_wastebyweek
 
@@ -94,7 +96,7 @@ ggp_wastebyweekandmanufac <- wastage %>%
                             by="week")) +
   xlab("") + ylab("") + 
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5)) + 
-  labs(title = "Total reported counts of doses wasted per week in USA") +
+  labs(title = "Reported counts of doses wasted per week in USA") +
   labs(caption = caption_text) +
   facet_wrap(~VAX_MANUFACTURER, nrow = 3, scales = "free_y")
 ggp_wastebyweekandmanufac
@@ -114,8 +116,8 @@ ggp_spaghetti_plot <- wastage %>%
   xlab("") + ylab("") + 
   theme(legend.position="bottom", legend.title = element_blank()) +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5)) + 
-  labs(title = "Total reported counts of doses wasted per week in USA by Vaccine Manufacturer") +
-  labs(caption = caption_text) +
+  labs(title = "Reported counts of doses wasted per week in USA by Vaccine Manufacturer") +
+  labs(caption = caption_text_alt) +
   geom_smooth(colour="black", size = 0.25, se = FALSE)
 ggp_spaghetti_plot
 
@@ -193,7 +195,7 @@ ggp_wastebymanufact <- topn_plot(group_by_var1 = VAX_MANUFACTURER,
            measure = DOSES_SUBMITTED, 
            title_entry = "Reported counts of vaccine doses wasted by vaccine manufacturer") +
   scale_y_continuous(labels = scales::comma, limits =  c(0, 8000000)) +
-  labs(caption = caption_text)
+  labs(caption = caption_text_alt)
 ggp_wastebymanufact
 
 ggp_costbymanufact <- topn_plot(group_by_var1 = VAX_MANUFACTURER, 
@@ -201,7 +203,7 @@ ggp_costbymanufact <- topn_plot(group_by_var1 = VAX_MANUFACTURER,
                                   title_entry = "Estimated cost of vaccine doses wasted by vaccine manufacturer") +
   scale_y_continuous(labels = scales::dollar_format(), 
                      limits =  c(0, 100000000)) +
-  labs(caption = caption_text)
+  labs(caption = caption_text_alt)
 ggp_costbymanufact
 
 # Total waste by awardee and manufacturer---
