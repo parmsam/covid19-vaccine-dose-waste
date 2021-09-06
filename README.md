@@ -1,5 +1,10 @@
 # covid19-vaccine-waste
 
+## data source:
+* https://anonymousdata.medium.com/the-cdc-reported-11-3-million-wasted-covid-19-vaccine-doses-in-8-months-5bdff71a850a
+* https://adatascienti.st/cdc/wastage.xlsx
+* https://adatascienti.st/cdc/wastage.ndjson.zip
+
 ## recommended reading:
 * https://www.nbcnews.com/news/us-news/america-has-wasted-least-15-million-covid-vaccine-doses-march-n1278211
 * https://www.someweekendreading.blog/vaccine-waste/
