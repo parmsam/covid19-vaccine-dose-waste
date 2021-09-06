@@ -8,21 +8,23 @@ library(scales)
 library(janitor)
 
 # ensure sub-directory creation ----
-check_proj_subdir <- function(){
+check_dir_exist <- function(dir_name){
   library(here)
-  if(!dir.exists(here("input")) ){
-    dir.create(here("input"))
-  }
-  
-  if(!dir.exists(here("output")) ){
-    dir.create(here("output"))
-  }
-  
-  if(!dir.exists(here("graphics")) ){
-    dir.create(here("graphics"))
+  if(!dir.exists(here(dir_name)) ){
+    dir.create(here(dir_name))
+    message(dir_name, "/ created.")
+    return(TRUE)
+  } else {
+    message(dir_name, "/ already exists.")
+    return(FALSE)
   }
 }
-check_proj_subdir()
+check_proj_subdirs <- function(){
+  library(purrr)
+  directories_vec <- c("input", "output", "graphics", "test")
+  map_chr(directories_vec, check_dir_exist)
+}
+check_proj_subdirs()
 
 #download excel data ----
 excel_url <- "https://adatascienti.st/cdc/wastage.xlsx"
