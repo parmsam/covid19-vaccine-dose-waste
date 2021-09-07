@@ -26,6 +26,7 @@ R scripts to process the data in `R/`. Run `load.R` first then run `analysis.R`.
 ![plot](graphics/ggp_wastebyweekandmanufac.png)
 ![plot](graphics/ggp_wastebyawardee.png)
 ![plot](graphics/ggp_costbyawardee.png)
+![plot](graphcis/tm_wastebyawardee.png)
 ![plot](graphics/ggp_wastebymanufact.png)
 ![plot](graphics/ggp_costbymanufact.png)
 ![plot](graphics/ggp_wastebyawardee_manufac.png)
