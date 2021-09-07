@@ -1,6 +1,6 @@
 # covid19-vaccine-dose-waste-in-usa
 
-Plots representing covid-19 vaccine dose waste in the USA embedded below. Note that there may be reporting bias (underreporting) in the data extract used. Dates represent wastage submission date in graphs below (not necessarily actual date of dose wasted). 
+Plots representing covid-19 vaccine dose waste in the USA embedded below. Note that there may be reporting bias (underreporting) in the data extract used. Dates represent wastage submission date in graphs below (not necessarily actual date of dose wasted which is unknown from data extract). 
 
 Credit to [a data scientist](https://anonymousdata.medium.com/) for filing a FOIA request with CDC for the dataset on vaccine waste. Links to data and original medium post below. Additionally, I would skim the recommended readings below, if interested in exploring further, since they provide additional context. The [post](https://www.someweekendreading.blog/vaccine-waste/
 ) from someweekendreading's blog is particularly insightful. Relative to other vaccine campaigns (see `someweekendreading's blog post` and the `Revising_Wastage_Concept_Note.pdf`), the estimated waste rates so far indicate that we're doing pretty well. Estimated costs info added via cost information from  news article [here](https://www.fiercepharma.com/pharma/pfizer-eyes-higher-covid-19-vaccine-prices-after-pandemic-exec-analyst).
