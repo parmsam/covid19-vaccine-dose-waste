@@ -10,7 +10,7 @@ library(plotly)
 library(forcats)
 library(writexl)
 library(glue)
-
+library(treemapify)
 #export processed dataset from load.R ----
 if(!file.exists( here("output/wastage-processed.csv") )){
   write.csv(wastage, here("output/wastage-processed.csv") )
@@ -144,6 +144,25 @@ topn_plot <- function(group_by_var1 = AWARDEE,
   return(ggp_wastebyawardee)
 }
 
+alt_treemap_plot <- function(group_by_var1 = AWARDEE,
+                      measure = DOSES_SUBMITTED, 
+                      n = 20, 
+                      title_entry = ""){
+  ggp_wastebyawardee <- wastage %>% 
+    group_by({{group_by_var1}}) %>%
+    summarize(Count_Doses_Wasted = sum({{measure}})) %>% 
+    arrange(-Count_Doses_Wasted) %>%
+    mutate({{group_by_var1}} := forcats::fct_reorder({{group_by_var1}}, Count_Doses_Wasted)) %>%
+    ggplot(aes(area = Count_Doses_Wasted, fill = Count_Doses_Wasted, 
+               label = paste({{group_by_var1}}, scales::comma(Count_Doses_Wasted, accuracy = 1), sep = "\n" ))
+           ) +
+    geom_treemap(start = "topleft") +
+    geom_treemap_text(start = "topleft") +
+    xlab("") + ylab("") +
+    labs(title= title_entry)
+  return(ggp_wastebyawardee)
+}
+
 topn_facet_plot <- function(group_by_var1 = AWARDEE,
                             facet_group1 = VAX_MANUFACTURER,
                             measure = DOSES_SUBMITTED, 
@@ -190,6 +209,11 @@ ggp_costbyawardee <- topn_plot(group_by_var1 = AWARDEE,
   scale_y_continuous(labels=scales::dollar_format(), limits =  c(0, 40000000))
 ggp_costbyawardee
 
+tm_wastebyawardee <- alt_treemap_plot(group_by_var1 = AWARDEE,
+                 measure = DOSES_SUBMITTED, 
+                 title_entry = "Treemap of reported counts of vaccine doses wasted by awardee") +
+  labs(caption = caption_text_alt)
+tm_wastebyawardee
 # Total waste by manufacturer ----
 ggp_wastebymanufact <- topn_plot(group_by_var1 = VAX_MANUFACTURER, 
            measure = DOSES_SUBMITTED, 
@@ -232,6 +256,7 @@ custom_ggsave_alt(gg_object = ggp_wastebyawardee_manufac)
 custom_ggsave(gg_object = ggp_spaghetti_plot)
 
 custom_ggsave(gg_object = ggp_wastebyawardee)
+custom_ggsave_alt(gg_object = tm_wastebyawardee)
 custom_ggsave(gg_object = ggp_wastebymanufact)
 
 custom_ggsave(gg_object = ggp_costbyawardee)
