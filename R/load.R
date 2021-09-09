@@ -21,7 +21,7 @@ check_dir_exist <- function(dir_name){
 }
 check_proj_subdirs <- function(){
   library(purrr)
-  directories_vec <- c("input", "output", "graphics", "test")
+  directories_vec <- c("input", "output", "graphics")
   map_chr(directories_vec, check_dir_exist)
 }
 check_proj_subdirs()
